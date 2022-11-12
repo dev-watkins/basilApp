@@ -1,0 +1,182 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime?
+  name                String
+  email               String
+  phoneNumber         String
+  Cookbooks           CookbookUser[]
+  list                List[]
+  AuthorizationTokens AuthorizationToken[]
+  refreshTokens       RefreshToken[]
+}
+
+model CookbookUser {
+  role       ROLE     @default(VIEWER)
+  user       User     @relation(fields: [userId], references: [id])
+  cookbook   Cookbook @relation(fields: [cookbookId], references: [id])
+  userId     String
+  cookbookId String
+
+  @@id([userId, cookbookId])
+}
+
+model Cookbook {
+  id        String         @id @default(uuid())
+  createdAt DateTime       @default(now())
+  updatedAt DateTime?
+  name      String
+  isPublic  Boolean
+  sections  Section[]
+  Users     CookbookUser[]
+}
+
+model Section {
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
+  name       String
+  cookbook   Cookbook  @relation(fields: [cookbookId], references: [id])
+  cookbookId String
+  recipes    Recipe[]
+}
+
+model Recipe {
+  id          String             @id @default(uuid())
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime?
+  name        String
+  tags        String
+  prepTime    Int
+  section     Section            @relation(fields: [sectionId], references: [id])
+  sectionId   String
+  directions  Direction[]
+  ingredients RecipeIngredient[]
+}
+
+model RecipeIngredient {
+  wholeNumber  Int?
+  fraction     String?
+  unit         UNIT       @default(TO_TASTE)
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  recipeId     String
+  ingredientId String
+
+  @@id([recipeId, ingredientId])
+}
+
+model Ingredient {
+  id        String             @id @default(uuid())
+  createdAt DateTime           @default(now())
+  updatedAt DateTime?
+  name      String
+  recipes   RecipeIngredient[]
+}
+
+model Direction {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  order     Int
+  body      String
+  recipe    Recipe    @relation(fields: [recipeId], references: [id])
+  recipeId  String
+}
+
+model List {
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?
+  name      String
+  users     User[]
+  items     ListItem[]
+}
+
+model ListItem {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  item      String
+  isDone    Boolean
+  list      List      @relation(fields: [listId], references: [id])
+  listId    String
+}
+
+model App {
+  id                  String               @id @default(uuid())
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime?
+  name                String
+  clientSecret        String
+  AuthorizationTokens AuthorizationToken[]
+}
+
+model AuthorizationToken {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  token     String
+  app       App       @relation(fields: [appId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  appId     String
+  userId    String
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  token     String
+  user      User      @relation(fields: [userId], references: [id])
+  device    Device    @relation(fields: [deviceId], references: [id])
+  userId    String
+  deviceId  String
+}
+
+model Device {
+  id            String         @id @default(uuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?
+  userAgent     String
+  ipAddress     String
+  refreshTokens RefreshToken[]
+}
+
+enum ROLE {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+enum UNIT {
+  EACH
+  TO_TASTE
+  CRANKS
+  PINCH
+  CUP
+  TBS
+  TSP
+  OZ
+  LBS
+  FL_OZ
+  GAL
+  QT
+  PINT
+  GM
+  KG
+  ML
+  L
+}
