@@ -1,8 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { User } from '@prisma/client';
 import { container } from 'tsyringe';
+import { UserService } from '../../services';
+import { RegisterInput } from 'types';
 
 export const userMutationResolver = {
-  register: (_: any, args: any) => {
-    const { email, name, phoneNumber } = args;
+  register: async (_: any, args: RegisterInput): Promise<User> => {
+    const userService = container.resolve<UserService>('UserService');
+    const user = await userService.register(args);
+    return user;
   },
 };
