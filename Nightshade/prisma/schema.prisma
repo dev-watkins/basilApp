@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id                  String               @id @default(uuid())
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime?
-  name                String
-  email               String
-  phoneNumber         String
-  Cookbooks           CookbookUser[]
-  list                List[]
-  AuthorizationTokens AuthorizationToken[]
-  refreshTokens       RefreshToken[]
+  id                 String              @id @default(uuid())
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime?
+  name               String
+  email              String              @unique
+  phoneNumber        String
+  verified           Boolean             @default(false)
+  Cookbooks          CookbookUser[]
+  list               List[]
+  verificationTokens VerificationToken[]
+  refreshTokens      RefreshToken[]
 }
 
 model CookbookUser {
@@ -116,22 +117,19 @@ model ListItem {
 }
 
 model App {
-  id                  String               @id @default(uuid())
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime?
-  name                String
-  clientSecret        String
-  AuthorizationTokens AuthorizationToken[]
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime?
+  name         String
+  clientSecret String
 }
 
-model AuthorizationToken {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
+model VerificationToken {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
   token     String
-  app       App       @relation(fields: [appId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
-  appId     String
+  used      Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
   userId    String
 }
 

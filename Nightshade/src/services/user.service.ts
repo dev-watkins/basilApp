@@ -1,8 +1,9 @@
 import { User } from '@prisma/client';
-import { container } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
 import { UserRepository } from '../repositories';
 import { RegisterInput } from '../types';
 
+@injectable()
 export class UserService {
   private readonly _repository: UserRepository;
 
@@ -12,6 +13,7 @@ export class UserService {
 
   async register(registration: RegisterInput): Promise<User> {
     const user = await this._repository.create(registration);
+    console.log(user.verificationTokens);
     return user;
   }
 }
