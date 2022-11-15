@@ -18,11 +18,11 @@ export class VerificationService {
     email: string
   ): Promise<MessagesSendResult> {
     const response = await this._mailer.send({
-      from: ``,
-      to: email,
+      from: process.env.MG_FROM,
+      to: [email],
       subject: 'New sign in request.',
       template: 'nightshade-verification',
-      'h:X-Mailgun-Variables': { verificationToken: token },
+      'h:X-Mailgun-Variables': JSON.stringify({ verificationToken: token }),
     });
     return response;
   }

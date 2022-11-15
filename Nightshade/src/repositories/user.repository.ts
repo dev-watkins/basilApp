@@ -1,12 +1,17 @@
 import { PrismaClient, Prisma, User, VerificationToken } from '@prisma/client';
 import { container, injectable } from 'tsyringe';
+import { VerificationService } from '../services';
 
 @injectable()
 export class UserRepository {
   private readonly _client: PrismaClient;
+  private readonly _verificationService: VerificationService;
 
   constructor() {
     this._client = container.resolve<PrismaClient>('PrismaClient');
+    this._verificationService = container.resolve<VerificationService>(
+      'VerificationService'
+    );
   }
 
   async create(
@@ -18,7 +23,7 @@ export class UserRepository {
         verificationTokens: {
           create: [
             {
-              token: Math.floor(100000 + Math.random() * 900000).toString(),
+              token: this._verificationService.createToken(),
             },
           ],
         },

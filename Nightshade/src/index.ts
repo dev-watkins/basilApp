@@ -9,7 +9,7 @@ import { App, Server } from './framework';
 import { Apollo, typeDefs, query, mutation } from './apollo';
 import prisma from './helpers/client';
 import { UserRepository } from './repositories';
-import { UserService } from './services';
+import { UserService, MailService, VerificationService } from './services';
 
 export async function bootstrap(): Promise<void> {
   dotenv.config();
@@ -24,6 +24,14 @@ export async function bootstrap(): Promise<void> {
 
   container.register<App>('App', {
     useValue: app,
+  });
+
+  container.register<MailService>('MailService', {
+    useValue: new MailService(),
+  });
+
+  container.register<VerificationService>('VerificationService', {
+    useValue: new VerificationService(),
   });
 
   container.register<UserRepository>('UserRepository', {

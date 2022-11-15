@@ -129,7 +129,7 @@ model VerificationToken {
   createdAt DateTime @default(now())
   token     String
   used      Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String
 }
 
