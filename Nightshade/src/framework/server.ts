@@ -19,16 +19,17 @@ export class Server implements IServer {
   }
 
   async start(): Promise<void> {
-    const port = process.env.PORT ?? 3000;
     try {
+      const port = process.env.PORT ?? 3000;
+
       await this.server.listen({ port });
       console.log(
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Nightshade Server ready at ${process.env.HOST}:${process.env.PORT}/`
+        `Nightshade Server ready at ${process.env.HOST}:${port}/`
       );
       console.log(
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Apollo Server ready at ${process.env.HOST}:${process.env.PORT}/graphql`
+        `Apollo Server ready at ${process.env.HOST}:${port}/graphql`
       );
     } catch (e) {
       throw new Error(e as string);
