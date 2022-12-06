@@ -6,9 +6,15 @@ import { requestValidator, RegisterRequest } from '../../requestSchemas';
 
 export const userMutationResolver = {
   register: async (_: any, args: RegisterInput): Promise<User> => {
-    requestValidator(RegisterRequest, args);
-    const userService = container.resolve<UserService>('UserService');
-    const user = await userService.register(args);
+    let user;
+    try {
+      requestValidator(RegisterRequest, args);
+      const userService = container.resolve<UserService>('UserService');
+      user = await userService.register(args);
+    } catch (error) {
+      console.log(error);
+      throw new Error(error as string);
+    }
     return user;
   },
 };
