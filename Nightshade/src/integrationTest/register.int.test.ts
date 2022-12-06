@@ -6,6 +6,7 @@ import { UserRepository } from '../repositories';
 import { VerificationService, MailService, UserService } from '../services';
 import prisma from '../helpers/client';
 import { typeDefs, query, mutation } from '../apollo';
+import { REQUEST_VALIDATION_ERROR, DATABASE_REQUEST_ERROR } from '../framework';
 
 let server: ApolloServer;
 beforeAll(() => {
@@ -100,6 +101,10 @@ describe('int tests for registering a user', () => {
 
     // @ts-ignore
     expect(response.body.singleResult.errors).toBeDefined();
+    // @ts-ignore
+    expect(response.body.singleResult.errors[0].extensions.code).toEqual(
+      DATABASE_REQUEST_ERROR
+    );
   });
 
   it('should not register user with invalid request', async () => {
@@ -118,5 +123,9 @@ describe('int tests for registering a user', () => {
 
     // @ts-ignore
     expect(response.body.singleResult.errors).toBeDefined();
+    // @ts-ignore
+    expect(response.body.singleResult.errors[0].extensions.code).toEqual(
+      REQUEST_VALIDATION_ERROR
+    );
   });
 });
