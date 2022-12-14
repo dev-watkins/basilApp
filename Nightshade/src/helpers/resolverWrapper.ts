@@ -1,7 +1,12 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { ZodError } from 'zod';
 import { GraphQLError } from 'graphql';
-import { REQUEST_VALIDATION_ERROR, DATABASE_REQUEST_ERROR } from '../framework';
+import {
+  REQUEST_VALIDATION_ERROR,
+  DATABASE_REQUEST_ERROR,
+  UNAUTHORIZED_CLIENT,
+  UnauthorizedClient,
+} from '../framework';
 import { logger } from './logger';
 
 export const resolverWrapper = async (
@@ -24,6 +29,15 @@ export const resolverWrapper = async (
           code: DATABASE_REQUEST_ERROR,
         },
       });
+    } else if (err instanceof UnauthorizedClient) {
+      throw new GraphQLError(
+        'Client is not authenticated please provide a valid clientId and secret',
+        {
+          extensions: {
+            code: UNAUTHORIZED_CLIENT,
+          },
+        }
+      );
     } else {
       throw new GraphQLError('Internal Server Error', {
         extensions: {

@@ -25,8 +25,8 @@ export class Apollo {
     });
   }
 
-  async context({ req, res }: ExpressContextFunctionArgument): Promise<object> {
-    return { req, res };
+  async context({ req }: ExpressContextFunctionArgument): Promise<object> {
+    return { req };
   }
 
   ApolloMiddleware(): any {
