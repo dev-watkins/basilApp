@@ -18,10 +18,7 @@ export class UserService {
 
   async register(registration: RegisterInput): Promise<User> {
     const user = await this._repository.create(registration);
-    await this._verificationService.sendVerificationEmail(
-      user.verificationTokens[0].token,
-      user.email
-    );
+    await this._verificationService.sendVerificationEmail(user.email);
     return user;
   }
 }

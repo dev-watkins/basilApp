@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
 import { UserRepository } from './user.repository';
-import { VerificationService, MailService } from '../services';
 
 describe('tests for user repository', () => {
   it('should call client create', async () => {
@@ -10,12 +9,6 @@ describe('tests for user repository', () => {
     prisma.user.create = jest.fn();
     container.register<PrismaClient>('PrismaClient', {
       useValue: prisma,
-    });
-    container.register<MailService>('MailService', {
-      useValue: new MailService(),
-    });
-    container.register<VerificationService>('VerificationService', {
-      useValue: new VerificationService(),
     });
 
     const repository = new UserRepository();

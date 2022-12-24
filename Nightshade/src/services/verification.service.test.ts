@@ -11,7 +11,7 @@ describe('test for verification service', () => {
       useValue: mailer,
     });
     const vs = new VerificationService();
-    const token = vs.createToken();
+    const token = vs.createToken('matthew@test.com');
 
     expect(token).toBeDefined();
     expect(typeof token).toBe('string');
@@ -26,7 +26,7 @@ describe('test for verification service', () => {
       useValue: mailer,
     });
     const vs = new VerificationService();
-    await vs.sendVerificationEmail('123456', 'test@test.com');
+    await vs.sendVerificationEmail('test@test.com');
 
     expect(mailer.send).toBeCalled();
   });

@@ -8,7 +8,7 @@ import prisma from '../helpers/client';
 import { typeDefs, query, mutation } from '../apollo';
 import { REQUEST_VALIDATION_ERROR, DATABASE_REQUEST_ERROR } from '../framework';
 
-let server: ApolloServer;
+let server: ApolloServer<any>;
 beforeAll(() => {
   // Register dependencies
   container.register<PrismaClient>('PrismaClient', {
@@ -59,15 +59,27 @@ afterAll(async () => {
 
 describe('int tests for registering a user', () => {
   it('should register a unique user', async () => {
-    const response = await server.executeOperation({
-      query:
-        'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
-      variables: {
-        name: 'Matthew Watkins',
-        email: 'matthewwatkins0@gmail.com',
-        phoneNumber: '9189485963',
+    const response = await server.executeOperation(
+      {
+        query:
+          'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
+        variables: {
+          name: 'Matthew Watkins',
+          email: 'matthewwatkins0@gmail.com',
+          phoneNumber: '9189485963',
+        },
       },
-    });
+      {
+        contextValue: {
+          req: {
+            headers: {
+              client_id: '123',
+              client_secret: '123',
+            },
+          },
+        },
+      }
+    );
 
     // @ts-ignore
     console.log(response.body.singleResult);
@@ -86,15 +98,27 @@ describe('int tests for registering a user', () => {
   });
 
   it('should not register a user that already exists', async () => {
-    const response = await server.executeOperation({
-      query:
-        'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
-      variables: {
-        name: 'test user',
-        email: 'test@test.com',
-        phoneNumber: '9189181234',
+    const response = await server.executeOperation(
+      {
+        query:
+          'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
+        variables: {
+          name: 'test user',
+          email: 'test@test.com',
+          phoneNumber: '9189181234',
+        },
       },
-    });
+      {
+        contextValue: {
+          req: {
+            headers: {
+              client_id: '123',
+              client_secret: '123',
+            },
+          },
+        },
+      }
+    );
 
     // @ts-ignore
     console.log(response.body.singleResult.errors);
@@ -108,15 +132,27 @@ describe('int tests for registering a user', () => {
   });
 
   it('should not register user with invalid request', async () => {
-    const response = await server.executeOperation({
-      query:
-        'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
-      variables: {
-        name: 'test user',
-        email: 'test',
-        phoneNumber: '9189181234',
+    const response = await server.executeOperation(
+      {
+        query:
+          'mutation register($email: String!, $name: String!, $phoneNumber: String!){register(email: $email, name: $name, phoneNumber: $phoneNumber){id name}}',
+        variables: {
+          name: 'test user',
+          email: 'test',
+          phoneNumber: '9189181234',
+        },
       },
-    });
+      {
+        contextValue: {
+          req: {
+            headers: {
+              client_id: '123',
+              client_secret: '123',
+            },
+          },
+        },
+      }
+    );
 
     // @ts-ignore
     console.log(response.body.singleResult.errors);

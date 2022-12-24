@@ -14,8 +14,8 @@ export const userMutationResolver = {
     { req }: ExpressContextFunctionArgument
   ): Promise<User> => {
     return await resolverWrapper(async () => {
-      const { client_id, client_secret } = req.headers;
       console.log(req.headers);
+      const { client_id, client_secret } = req.headers;
       if (!client_id || !client_secret) {
         throw new UnauthorizedClient();
       }

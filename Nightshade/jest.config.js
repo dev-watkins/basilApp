@@ -6,4 +6,5 @@ module.exports = {
   coverageReporters: ['text', 'lcov'],
   collectCoverage: true,
   collectCoverageFrom: ['./src/**/{!(index.ts),}'],
+  setupFiles: ['dotenv/config'],
 };
