@@ -6,13 +6,16 @@ import {
   DATABASE_REQUEST_ERROR,
   UNAUTHORIZED_CLIENT,
   UnauthorizedClient,
+  ClientAppNotFound,
 } from '../framework';
 import { logger } from './logger';
 
 export const resolverWrapper = async (
-  resolver: () => Promise<any>
+  resolver: () => Promise<any>,
+  middleware?: Array<() => any>
 ): Promise<any> => {
   try {
+    if (middleware) await Promise.all(middleware?.map((mw) => mw()));
     return await resolver();
   } catch (err) {
     logger.error(err);
@@ -38,6 +41,10 @@ export const resolverWrapper = async (
           },
         }
       );
+    } else if (err instanceof ClientAppNotFound) {
+      throw new GraphQLError('Client id not found', {
+        extensions: { code: UNAUTHORIZED_CLIENT },
+      });
     } else {
       throw new GraphQLError('Internal Server Error', {
         extensions: {

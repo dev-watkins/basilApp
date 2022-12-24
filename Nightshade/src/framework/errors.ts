@@ -6,3 +6,4 @@ export const UNAUTHORIZED_CLIENT = 'UNAUTHORIZED_CLIENT';
 // error classes
 
 export class UnauthorizedClient extends Error {}
+export class ClientAppNotFound extends Error {}

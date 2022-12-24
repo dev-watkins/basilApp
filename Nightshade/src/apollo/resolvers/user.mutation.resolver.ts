@@ -5,7 +5,7 @@ import { UserService } from '../../services';
 import { RegisterInput } from '../../types';
 import { requestValidator, RegisterRequest } from '../../requestSchemas';
 import { resolverWrapper } from '../../helpers/resolverWrapper';
-import { UnauthorizedClient } from '../../framework';
+import { authenticateClient } from '../../middleware';
 
 export const userMutationResolver = {
   register: async (
@@ -14,17 +14,10 @@ export const userMutationResolver = {
     { req }: ExpressContextFunctionArgument
   ): Promise<User> => {
     return await resolverWrapper(async () => {
-      console.log(req.headers);
-      const { client_id, client_secret } = req.headers;
-      if (!client_id || !client_secret) {
-        throw new UnauthorizedClient();
-      }
-
-      requestValidator(RegisterRequest, args);
       const userService = container.resolve<UserService>('UserService');
       const user = await userService.register(args);
 
       return user;
-    });
+    }, [requestValidator(RegisterRequest, args), authenticateClient(req)]);
   },
 };

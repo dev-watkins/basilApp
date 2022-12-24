@@ -1,13 +1,20 @@
-import { randomBytes } from 'crypto';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
+import { PrismaClient } from '@prisma/client';
+import { ClientAppRepository } from '../repositories';
+import { ClientAppService } from '../services';
 import prisma from './client';
 
 const seed = async (): Promise<void> => {
-  await prisma.app.create({
-    data: {
-      name: 'basil',
-      clientSecret: (await randomBytes(32)).toString('hex'),
-    },
+  container.register<PrismaClient>('PrismaClient', {
+    useValue: prisma,
   });
+  container.register<ClientAppRepository>('ClientAppRepository', {
+    useValue: new ClientAppRepository(),
+  });
+  const service = new ClientAppService();
+  const secret = await service.registerApp('Basil');
+  console.log(secret);
 };
 
 seed().catch((err) => console.log(err));

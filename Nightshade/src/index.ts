@@ -8,8 +8,13 @@ import { PrismaClient } from '@prisma/client';
 import { App, Server } from './framework';
 import { Apollo, typeDefs, query, mutation } from './apollo';
 import prisma from './helpers/client';
-import { UserRepository } from './repositories';
-import { UserService, MailService, VerificationService } from './services';
+import { UserRepository, ClientAppRepository } from './repositories';
+import {
+  UserService,
+  MailService,
+  VerificationService,
+  ClientAppService,
+} from './services';
 
 export async function bootstrap(): Promise<void> {
   dotenv.config();
@@ -38,8 +43,16 @@ export async function bootstrap(): Promise<void> {
     useValue: new UserRepository(),
   });
 
+  container.register<ClientAppRepository>('ClientAppRepository', {
+    useValue: new ClientAppRepository(),
+  });
+
   container.register<UserService>('UserService', {
     useValue: new UserService(),
+  });
+
+  container.register<ClientAppService>('ClientAppService', {
+    useValue: new ClientAppService(),
   });
 
   // build http server

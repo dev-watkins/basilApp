@@ -1,4 +1,4 @@
-import { User, VerificationToken } from '@prisma/client';
+import { User } from '@prisma/client';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { UserRepository } from '../repositories';
@@ -22,7 +22,7 @@ describe('test for user service', () => {
       return (await Promise.resolve({
         email: 'test@test.com',
         verificationTokens: [{ token: '123456' }],
-      })) as unknown as User & VerificationToken;
+      })) as unknown as User;
     });
 
     container.register<UserRepository>('UserRepository', {

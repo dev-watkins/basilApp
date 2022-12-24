@@ -2,8 +2,13 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from '@apollo/server';
-import { UserRepository } from '../repositories';
-import { VerificationService, MailService, UserService } from '../services';
+import { UserRepository, ClientAppRepository } from '../repositories';
+import {
+  VerificationService,
+  MailService,
+  UserService,
+  ClientAppService,
+} from '../services';
 import prisma from '../helpers/client';
 import { typeDefs, query, mutation } from '../apollo';
 import { REQUEST_VALIDATION_ERROR, DATABASE_REQUEST_ERROR } from '../framework';
@@ -29,6 +34,14 @@ beforeAll(() => {
 
   container.register<UserService>('UserService', {
     useValue: new UserService(),
+  });
+
+  container.register<ClientAppRepository>('ClientAppRepository', {
+    useValue: new ClientAppRepository(),
+  });
+
+  container.register<ClientAppService>('ClientAppService', {
+    useValue: new ClientAppService(),
   });
 
   server = new ApolloServer({
@@ -73,8 +86,8 @@ describe('int tests for registering a user', () => {
         contextValue: {
           req: {
             headers: {
-              client_id: '123',
-              client_secret: '123',
+              client_id: process.env.BASIL_CLIENT_ID,
+              client_secret: process.env.BASIL_CLIENT_SECRET,
             },
           },
         },
@@ -112,8 +125,8 @@ describe('int tests for registering a user', () => {
         contextValue: {
           req: {
             headers: {
-              client_id: '123',
-              client_secret: '123',
+              client_id: process.env.BASIL_CLIENT_ID,
+              client_secret: process.env.BASIL_CLIENT_SECRET,
             },
           },
         },
@@ -146,8 +159,8 @@ describe('int tests for registering a user', () => {
         contextValue: {
           req: {
             headers: {
-              client_id: '123',
-              client_secret: '123',
+              client_id: process.env.BASIL_CLIENT_ID,
+              client_secret: process.env.BASIL_CLIENT_SECRET,
             },
           },
         },

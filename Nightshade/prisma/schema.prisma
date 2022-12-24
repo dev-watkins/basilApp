@@ -11,17 +11,16 @@ datasource db {
 }
 
 model User {
-  id                 String              @id @default(uuid())
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime?
-  name               String
-  email              String              @unique
-  phoneNumber        String
-  verified           Boolean             @default(false)
-  Cookbooks          CookbookUser[]
-  list               List[]
-  verificationTokens VerificationToken[]
-  refreshTokens      RefreshToken[]
+  id            String         @id @default(uuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?
+  name          String
+  email         String         @unique
+  phoneNumber   String
+  verified      Boolean        @default(false)
+  Cookbooks     CookbookUser[]
+  list          List[]
+  refreshTokens RefreshToken[]
 }
 
 model CookbookUser {
@@ -122,15 +121,6 @@ model App {
   updatedAt    DateTime?
   name         String
   clientSecret String
-}
-
-model VerificationToken {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  token     String
-  used      Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String
 }
 
 model RefreshToken {
