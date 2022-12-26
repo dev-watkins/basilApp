@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>19/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>19/38</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -117,27 +117,27 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import http from 'http';
 import { singleton, container } from 'tsyringe';
@@ -154,28 +154,28 @@ export class Server implements IServer {
   server: http.Server;
   expressApp: App;
 &nbsp;
-  constructor() {
-    this.expressApp = container.resolve&lt;App&gt;('App');
-    this.server = http.createServer(this.expressApp.app);
-  }
+<span class="fstat-no" title="function not covered" >  constructor() {</span>
+<span class="cstat-no" title="statement not covered" >    this.expressApp = container.resolve&lt;App&gt;('App');</span>
+<span class="cstat-no" title="statement not covered" >    this.server = http.createServer(this.expressApp.app);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 &nbsp;
-  async start(): Promise&lt;void&gt; {
-    try {
-      const port = process.env.PORT<span class="branch-0 cbranch-no" title="branch not covered" > ?? 3000;</span>
-&nbsp;
-      await this.server.listen({ port });
-      console.log(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Nightshade Server ready at ${process.env.HOST}:${port}/`
-      );
-      console.log(
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `Apollo Server ready at ${process.env.HOST}:${port}/graphql`
-      );
-    } catch (e) {
-      throw new Error(e as string);
-    }
-  }
+  async <span class="fstat-no" title="function not covered" >start(): Promise&lt;void&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      const port = process.env.PORT ?? 3000;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      await this.server.listen({ port });</span>
+<span class="cstat-no" title="statement not covered" >      console.log(</span>
+<span class="cstat-no" title="statement not covered" >        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions</span>
+<span class="cstat-no" title="statement not covered" >        `Nightshade Server ready at ${process.env.HOST}:${port}/`</span>
+<span class="cstat-no" title="statement not covered" >      );</span>
+<span class="cstat-no" title="statement not covered" >      console.log(</span>
+<span class="cstat-no" title="statement not covered" >        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions</span>
+<span class="cstat-no" title="statement not covered" >        `Apollo Server ready at ${process.env.HOST}:${port}/graphql`</span>
+<span class="cstat-no" title="statement not covered" >      );</span>
+<span class="cstat-no" title="statement not covered" >    } catch (e) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(e as string);</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -184,7 +184,7 @@ export class Server implements IServer {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-24T20:51:01.371Z
+                at 2022-12-25T04:58:34.175Z
             </div>
         <script src="../prettify.js"></script>
         <script>

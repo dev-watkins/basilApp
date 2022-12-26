@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.07% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/56</span>
+                <span class='fraction'>0/56</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.07% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/56</span>
+                <span class='fraction'>0/56</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,41 +119,7 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -173,43 +139,77 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { ZodError } from 'zod';
-import { GraphQLError } from 'graphql';
-import {
-  REQUEST_VALIDATION_ERROR,
-  DATABASE_REQUEST_ERROR,
-  UNAUTHORIZED_CLIENT,
-  UnauthorizedClient,
-  ClientAppNotFound,
-} from '../framework';
-import { logger } from './logger';
-&nbsp;
-export const resolverWrapper = async (
-  resolver: () =&gt; Promise&lt;any&gt;,
-  middleware?: Array&lt;() =&gt; any&gt;
-): Promise&lt;any&gt; =&gt; {
-  try {
-    if (middleware) await Promise.all(middleware<span class="branch-0 cbranch-no" title="branch not covered" >?.m</span>ap((mw) =&gt; mw()));
-    return await resolver();
-  } catch (err) {
-    logger.error(err);
-    if (err instanceof ZodError) {
-      throw new GraphQLError('Request validation error', {
-        extensions: {
-          code: REQUEST_VALIDATION_ERROR,
-          errors: err,
-        },
-      });
-    } else if (err instanceof PrismaClientKnownRequestError) {
-      throw new GraphQLError('Invalid database request', {
-        extensions: {
-          code: DATABASE_REQUEST_ERROR,
-        },
-      });
-    }<span class="branch-0 cbranch-no" title="branch not covered" > else if (err instanceof UnauthorizedClient) {</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { PrismaClientKnownRequestError } from '@prisma/client/runtime';</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { ZodError } from 'zod';</span>
+<span class="cstat-no" title="statement not covered" >import { GraphQLError } from 'graphql';</span>
+<span class="cstat-no" title="statement not covered" >import {</span>
+<span class="cstat-no" title="statement not covered" >  REQUEST_VALIDATION_ERROR,</span>
+<span class="cstat-no" title="statement not covered" >  DATABASE_REQUEST_ERROR,</span>
+<span class="cstat-no" title="statement not covered" >  UNAUTHORIZED_CLIENT,</span>
+<span class="cstat-no" title="statement not covered" >  UnauthorizedClient,</span>
+<span class="cstat-no" title="statement not covered" >  ClientAppNotFound,</span>
+<span class="cstat-no" title="statement not covered" >} from '../framework';</span>
+<span class="cstat-no" title="statement not covered" >import { logger } from './logger';</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const resolverWrapper = async (</span>
+<span class="cstat-no" title="statement not covered" >  resolver: () =&gt; Promise&lt;any&gt;,</span>
+<span class="cstat-no" title="statement not covered" >  middleware?: Array&lt;() =&gt; any&gt;</span>
+<span class="cstat-no" title="statement not covered" >): Promise&lt;any&gt; =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    if (middleware) await Promise.all(middleware?.map((mw) =&gt; mw()));</span>
+<span class="cstat-no" title="statement not covered" >    return await resolver();</span>
+<span class="cstat-no" title="statement not covered" >  } catch (err) {</span>
+<span class="cstat-no" title="statement not covered" >    logger.error(err);</span>
+<span class="cstat-no" title="statement not covered" >    if (err instanceof ZodError) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new GraphQLError('Request validation error', {</span>
+<span class="cstat-no" title="statement not covered" >        extensions: {</span>
+<span class="cstat-no" title="statement not covered" >          code: REQUEST_VALIDATION_ERROR,</span>
+<span class="cstat-no" title="statement not covered" >          errors: err,</span>
+<span class="cstat-no" title="statement not covered" >        },</span>
+<span class="cstat-no" title="statement not covered" >      });</span>
+<span class="cstat-no" title="statement not covered" >    } else if (err instanceof PrismaClientKnownRequestError) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new GraphQLError('Invalid database request', {</span>
+<span class="cstat-no" title="statement not covered" >        extensions: {</span>
+<span class="cstat-no" title="statement not covered" >          code: DATABASE_REQUEST_ERROR,</span>
+<span class="cstat-no" title="statement not covered" >        },</span>
+<span class="cstat-no" title="statement not covered" >      });</span>
+<span class="cstat-no" title="statement not covered" >    } else if (err instanceof UnauthorizedClient) {</span>
 <span class="cstat-no" title="statement not covered" >      throw new GraphQLError(</span>
 <span class="cstat-no" title="statement not covered" >        'Client is not authenticated please provide a valid clientId and secret',</span>
 <span class="cstat-no" title="statement not covered" >        {</span>
@@ -229,8 +229,8 @@ export const resolverWrapper = async (
 <span class="cstat-no" title="statement not covered" >        },</span>
 <span class="cstat-no" title="statement not covered" >      });</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-  }
-};
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -238,7 +238,7 @@ export const resolverWrapper = async (
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-24T20:51:01.371Z
+                at 2022-12-25T04:58:34.175Z
             </div>
         <script src="../prettify.js"></script>
         <script>
