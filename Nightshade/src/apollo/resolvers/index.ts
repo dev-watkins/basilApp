@@ -1,6 +1,12 @@
-import { userResolver } from './userResolver';
-export * from './userResolver';
+import { userQueryResolver } from './user.query.resolver';
+import { userMutationResolver } from './user.mutation.resolver';
+export * from './user.query.resolver';
+export * from './user.mutation.resolver';
 
 export const query = {
-  ...userResolver,
+  ...userQueryResolver,
+};
+
+export const mutation = {
+  ...userMutationResolver,
 };

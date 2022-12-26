@@ -6,8 +6,15 @@ import cors from 'cors';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
 import { App, Server } from './framework';
-import { Apollo, typeDefs, query } from './apollo';
+import { Apollo, typeDefs, query, mutation } from './apollo';
 import prisma from './helpers/client';
+import { UserRepository, ClientAppRepository } from './repositories';
+import {
+  UserService,
+  MailService,
+  VerificationService,
+  ClientAppService,
+} from './services';
 
 export async function bootstrap(): Promise<void> {
   dotenv.config();
@@ -24,6 +31,30 @@ export async function bootstrap(): Promise<void> {
     useValue: app,
   });
 
+  container.register<MailService>('MailService', {
+    useValue: new MailService(),
+  });
+
+  container.register<VerificationService>('VerificationService', {
+    useValue: new VerificationService(),
+  });
+
+  container.register<UserRepository>('UserRepository', {
+    useValue: new UserRepository(),
+  });
+
+  container.register<ClientAppRepository>('ClientAppRepository', {
+    useValue: new ClientAppRepository(),
+  });
+
+  container.register<UserService>('UserService', {
+    useValue: new UserService(),
+  });
+
+  container.register<ClientAppService>('ClientAppService', {
+    useValue: new ClientAppService(),
+  });
+
   // build http server
   const httpServer = new Server();
 
@@ -32,7 +63,7 @@ export async function bootstrap(): Promise<void> {
   });
 
   // build apollo server
-  const apollo = new Apollo(typeDefs, query);
+  const apollo = new Apollo(typeDefs, query, mutation);
   await apollo.start();
 
   // attach middleware

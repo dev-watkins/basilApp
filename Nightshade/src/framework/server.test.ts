@@ -16,6 +16,18 @@ describe('Server tests', () => {
     expect(expressServer.expressApp).toBeDefined();
   });
 
+  it('should call server listen method with default port', async () => {
+    container.register('App', {
+      useValue: jest.fn(() => {
+        return {};
+      }),
+    });
+    const expressServer = new Server();
+    expressServer.server.listen = jest.fn().mockResolvedValueOnce('');
+    await expressServer.start();
+    expect(expressServer.server.listen).toBeCalled();
+  });
+
   it('should call server listen method', async () => {
     container.register('App', {
       useValue: jest.fn(() => {
@@ -23,11 +35,10 @@ describe('Server tests', () => {
       }),
     });
     const expressServer = new Server();
-    console.log = jest.fn();
     expressServer.server.listen = jest.fn().mockResolvedValueOnce('');
+    process.env.PORT = '4000';
     await expressServer.start();
     expect(expressServer.server.listen).toBeCalled();
-    expect(console.log).toBeCalledTimes(2);
   });
 
   it('should throw error if call to server listen method fails', async () => {
